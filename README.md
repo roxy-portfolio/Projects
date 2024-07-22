@@ -24,12 +24,12 @@ BigQuery and Google Sheets will be utilized for data processing and analysis, wh
 
 The file caused an import error when using the "Auto detect" schema due to data type discrepancies, particularly with the timestamp format, which included AM/PM designations—formats not accepted by BigQuery. To resolve these issues and ensure a successful import, a custom schema was required. The CSV file was initially opened as a text document to inspect column names. Columns were then added individually using the "Add field" function (indicated by a plus sign in the schema section), with special attention given to specifying the timestamp column as a string field. For the other files, data types were changed to Datetime or Date using Google Sheets.
 
------ Checking unique user IDs for each tables -----
-
+#### Checking unique user IDs for each tables 
+````sql
 SELECT
  DISTINCT Id
 FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
-
+````
 | Table Name | Unique IDs | 
 | ------- | ----------- |
 | dailyActivity | 33 |
@@ -46,16 +46,18 @@ FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
 
 #### Data cleaning steps: 
 - Deleted duplicate rows in the sleepDay table.
-- Created new tables: ActivityDay, ActivityDate, ActivityHour and Period
+- Created new tables: ActivityDay, ActivityDate, ActivityHour and Period 
 - New daily_activity table with sleepDay data columns added 
 - Created hourly_activity table with data from hourlyCalories, hourlyIntensities and hourlySteps
   
+_`*` represent new columns_
+  
 | Column Name | Action Taken |
 | ------- | ----------- |
-| ActivityDay | Calculated by extracting the weekday from columns 'ActivityDate' or 'ActivityHour' (e.g., “Monday”) |
-| ActivityDate | Calculated by extracting the date from 'ActivityHour' datetime column |
-| ActivityHour | Calculated by extracting the time from 'ActivityHour' datetime column |
-| Period | This column is determined based on the time of day in the 'ActivityHour' column |
+| ActivityDay* | Calculated by extracting the weekday from columns 'ActivityDate' or 'ActivityHour' (e.g., “Monday”) |
+| ActivityDate* | Calculated by extracting the date from 'ActivityHour' datetime column |
+| ActivityHour* | Calculated by extracting the time from 'ActivityHour' datetime column |
+| Period* | This column is determined based on the time of day in the 'ActivityHour' column |
 | Morning | 5AM to 11AM |
 | Afternoon | 12PM to 6PM |
 | Evening | 7PM to 10PM |
@@ -99,10 +101,7 @@ SELECT
   calories.Id,
   DATE(calories.ActivityHour) AS ActivityDate,
   TIME(calories.ActivityHour) AS ActivityHour,
-  FORMAT_DATE('%A', calories.ActivityHour) AS ActivityDay,
-  CASE
-    WHEN EXTRACT(HOUR FROM calories.ActivityHour) BETWEEN 5 AND 11 THEN 'Morning'
-    WHEN EXTRACT(HOUR FROM calories.ActivityHour) BETWEEN 12 AND 18 THEN 'Afternoon'
+  FORMAT_DATE('%A', calorie FROM calories.ActivityHour) BETWEEN 12 AND 18 THEN 'Afternoon'
     WHEN EXTRACT(HOUR FROM calories.ActivityHour) BETWEEN 19 AND 22 THEN 'Evening'
     ELSE 'Night'
   END AS Period,
@@ -111,8 +110,89 @@ SELECT
   intensities.AverageIntensity,
   steps.StepTotal
 FROM `omega-terrain-424207-q5.bellabeat.hourly_calories` AS calories
+
+
 FULL OUTER JOIN `omega-terrain-424207-q5.bellabeat.hourly_intensities` AS intensities
 ON calories.Id = intensities.Id AND calories.ActivityHour = intensities.ActivityHour
 FULL OUTER JOIN `omega-terrain-424207-q5.bellabeat.hourly_steps` AS steps
 ON calories.Id = steps.Id AND calories.ActivityHour = steps.ActivityHour
 ````
+
+## Data Analysis
+I collect and analyze the minimum, maximum, and average values of numeric columns to gain insights into the data and identify any potential outliers that could influence the analysis.
+
+````sql
+SELECT 
+  MIN(SedentaryMinutes) AS MIN_SedentaryMinutes,
+  MIN(LightlyActiveMinutes) AS MIN_LightlyActiveMinutes,
+  MIN(FairlyActiveMinutes) AS MIN_FairlyActiveMinutes,
+  MIN(VeryActiveMinutes) AS MIN_VeryActiveMinutes,
+  MIN(SedentaryActiveDistance) AS MIN_SedentaryActiveDistance,
+  MIN(LightActiveDistance) AS MIN_LightActiveDistance,
+  MIN(ModeratelyActiveDistance) AS MIN_ModeratelyActiveDistance,
+  MIN(VeryActiveDistance) AS MIN_VeryActiveDistance,
+  MIN(TotalDistance) AS MIN_TotalDistance,
+  MIN(TotalSteps) AS MIN_TotalSteps,
+  MIN(Calories) AS MIN_Calories,
+  MIN(TotalSleepRecords) AS MIN_TotalSleepRecords,
+  MIN(TotalMinutesAsleep) AS MIN_TotalMinutesAsleep,
+  MIN(TotalTimeInBed) AS MIN_TotalTimeInBed
+FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
+````
+
+For full results: [click here](https://drive.google.com/file/d/1OT2dSiS7nMdL_C22FusTY-kp6XGgUeoF/view)
+
+````sql
+SELECT 
+  AVG(SedentaryMinutes) AS AVG_SedentaryMinutes,
+  AVG(LightlyActiveMinutes) AS AVG_LightlyActiveMinutes,
+  AVG(FairlyActiveMinutes) AS AVG_FairlyActiveMinutes,
+  AVG(VeryActiveMinutes) AS AVG_VeryActiveMinutes,
+  AVG(SedentaryActiveDistance) AS AVG_SedentaryActiveDistance,
+  AVG(LightActiveDistance) AS AVG_LightActiveDistance,
+  AVG(ModeratelyActiveDistance) AS AVG_ModeratelyActiveDistance,
+  AVG(VeryActiveDistance) AS AVG_VeryActiveDistance,
+  AVG(TotalDistance) AS AVG_TotalDistance,
+  AVG(TotalSteps) AS AVG_TotalSteps,
+  AVG(Calories) AS AVG_Calories,
+  AVG(TotalSleepRecords) AS AVG_TotalSleepRecords,
+  AVG(TotalMinutesAsleep) AS AVG_TotalMinutesAsleep,
+  AVG(TotalTimeInBed) AS AVG_TotalTimeInBed
+FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
+````
+For full results: [click here](https://drive.google.com/file/d/1K2EQa4JwNfrFmxBE3EHoypqsKSDG0OVM/view)
+
+````sql
+SELECT 
+  MAX(SedentaryMinutes) AS MAX_SedentaryMinutes,
+  MAX(LightlyActiveMinutes) AS MAX_LightlyActiveMinutes,
+  MAX(FairlyActiveMinutes) AS MAX_FairlyActiveMinutes,
+  MAX(VeryActiveMinutes) AS MAX_VeryActiveMinutes,
+  MAX(SedentaryActiveDistance) AS MAX_SedentaryActiveDistance,
+  MAX(LightActiveDistance) AS MAX_LightActiveDistance,
+  MAX(ModeratelyActiveDistance) AS MAX_ModeratelyActiveDistance,
+  MAX(VeryActiveDistance) AS MAX_VeryActiveDistance,
+  MAX(TrackerDistance) AS MAX_TrackerDistance,
+  MAX(TotalDistance) AS MAX_TotalDistance,
+  MAX(TotalSteps) AS MAX_TotalSteps,
+  MAX(Calories) AS MAX_Calories,
+  MAX(TotalSleepRecords) AS MAX_TotalSleepRecords,
+  MAX(TotalMinutesAsleep) AS MAX_TotalMinutesAsleep,
+  MAX(TotalTimeInBed) AS MAX_TotalTimeInBed
+FROM `omega-terrain-424207-q5.bellabeat.daily_activity
+````
+
+For full results: [click here](https://drive.google.com/file/d/1d5Qj3ak-UpVUk0M0oPHUJTjPOBmlTFJb/view)
+
+````sql
+SELECT
+  Id,
+  ROUND(AVG(FairlyActiveMinutes) + AVG(VeryActiveMinutes)) AS AVG_TotalActiveMinutes,
+  CASE
+    WHEN (AVG(FairlyActiveMinutes) + AVG(VeryActiveMinutes)) >= 20 THEN 'APPROVED'
+    ELSE 'NOT APPROVED'
+  END AS WHO_Recommendation
+FROM `steadfast-slate-398812.Bellabeat.dailyActivity`
+GROUP BY Id
+````
+For full results: [click here](https://drive.google.com/file/d/12P6oqob49XPinwhGZ_Il9rAUV-rFhsdy/view)
