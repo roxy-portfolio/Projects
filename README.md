@@ -19,4 +19,29 @@ insights you discover will then help guide marketing strategy for the company.
 ## Dataset used
 [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit) (CC0: Public Domain, dataset made available through Mobius)
 
+## Data Exploration
+
+I observed an error occurring whenever I imported certain CSV files due to data type issues. To prevent these errors, I opened the CSV files in Google Sheet and changed the activity_date format from TIMESTAMP to DATE.
+
+![image](https://drive.google.com/file/d/1ZSQj4QQXzExjwcqeGrdALHgqN0pj_ysP/view?usp=drive_link)
+
+-- Checking number of user IDs recorded under daily_activity without duplicates (Total User IDs: 35) -- 
+SELECT
+ DISTINCT Id
+FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
+
+-- Checking number of user IDs recorded under daily_intensities without duplicates (Total User IDs: 33) -- 
+SELECT
+ DISTINCT Id
+FROM `omega-terrain-424207-q5.bellabeat.daily_intensities
+
+-- Checking number of user IDs recorded under sleep_day without duplicates (Total User IDs: 24) -- 
+SELECT
+ DISTINCT Id
+FROM `omega-terrain-424207-q5.bellabeat.sleep_day`
+
+-- Checking number of user IDs recorded under steps without duplicates (Total User IDs: 33) -- 
+SELECT
+ DISTINCT Id
+FROM `omega-terrain-424207-q5.bellabeat.steps`
 
