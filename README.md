@@ -20,28 +20,82 @@ insights you discover will then help guide marketing strategy for the company.
 [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit) (CC0: Public Domain, dataset made available through Mobius)
 
 ## Data Exploration
+BigQuery and Google Sheets will be utilized for data processing and analysis, while Tableau will be used for data visualization.
 
-I observed an error occurring whenever I imported certain CSV files due to data type issues. To prevent these errors, I opened the CSV files in Google Sheet and changed the activity_date format from TIMESTAMP to DATE.
+The file caused an import error when using the "Auto detect" schema due to data type discrepancies, particularly with the timestamp format, which included AM/PM designations—formats not accepted by BigQuery. To resolve these issues and ensure a successful import, a custom schema was required. The CSV file was initially opened as a text document to inspect column names. Columns were then added individually using the "Add field" function (indicated by a plus sign in the schema section), with special attention given to specifying the timestamp column as a string field. For the other files, data types were changed to Datetime or Date using Google Sheets.
 
-![image](https://drive.google.com/file/d/1ZSQj4QQXzExjwcqeGrdALHgqN0pj_ysP/view?usp=drive_link)
+----- Checking unique user IDs for each tables -----
 
--- Checking number of user IDs recorded under daily_activity without duplicates (Total User IDs: 35) -- 
 SELECT
  DISTINCT Id
 FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
 
--- Checking number of user IDs recorded under daily_intensities without duplicates (Total User IDs: 33) -- 
-SELECT
- DISTINCT Id
-FROM `omega-terrain-424207-q5.bellabeat.daily_intensities
+| Table Name | Unique IDs | 
+| ------- | ----------- |
+| dailyActivity | 33 |
+| heartrate_seconds | 14 |
+| hourlyCalories | 33
+| hourlyIntensities | 33 |
+| hourlySteps | 33 |
+| sleepDay | 24 |
+| weightLoginfo | 8 |
 
--- Checking number of user IDs recorded under sleep_day without duplicates (Total User IDs: 24) -- 
-SELECT
- DISTINCT Id
-FROM `omega-terrain-424207-q5.bellabeat.sleep_day`
+## Data Cleaning & Manipulation
 
--- Checking number of user IDs recorded under steps without duplicates (Total User IDs: 33) -- 
-SELECT
- DISTINCT Id
-FROM `omega-terrain-424207-q5.bellabeat.steps`
+- The dataset shows that all tables have a common 'Id' column and a similar date column. These columns will be used to join the tables, reducing the total number from five to two: one for daily data (dailyActivity) and another for hourly data (hourlyActivity). Additionally, columns for days of the week (e.g., Monday, Tuesday) and time periods (e.g., Morning, Afternoon) will be created.
 
+
+````sql
+CREATE OR REPLACE TABLE `omega-terrain-424207-q5.bellabeat.daily_activity` AS 
+SELECT 
+  day.Id,
+  day.ActivityDate,
+  FORMAT_DATE('%A', day.ActivityDate) AS ActivityDay,
+  day.SedentaryMinutes,
+  day.LightlyActiveMinutes,
+  day.FairlyActiveMinutes,
+  day.VeryActiveMinutes,
+  day.SedentaryActiveDistance,
+  day.LightActiveDistance,
+  day.ModeratelyActiveDistance,
+  day.VeryActiveDistance,
+  day.LoggedActivitiesDistance,
+  day.TrackerDistance,
+  day.TotalDistance,
+  day.TotalSteps,
+  day.Calories,
+  sleep.TotalSleepRecords,
+  sleep.TotalMinutesAsleep,
+  sleep.TotalTimeInBed
+FROM `omega-terrain-424207-q5.bellabeat.daily_activity` AS day
+LEFT JOIN `omega-terrain-424207-q5.bellabeat.sleep_day` AS sleep
+ON day.Id = sleep.Id AND day.ActivityDate = sleep.SleepDay
+````
+
+- Create new hourlyActivity table from the other 3 tables and split ActivityHour column into Date and Time columns.
+- Create a period columns with day periods, i.e., Morning, Afternoon, etc.
+
+
+````sql
+CREATE OR REPLACE TABLE `omega-terrain-424207-q5.bellabeat.hourly_activity` AS
+SELECT 
+  calories.Id,
+  DATE(calories.ActivityHour) AS ActivityDate,
+  TIME(calories.ActivityHour) AS ActivityHour,
+  FORMAT_DATE('%A', calories.ActivityHour) AS ActivityDay,
+  CASE
+    WHEN EXTRACT(HOUR FROM calories.ActivityHour) BETWEEN 5 AND 11 THEN 'Morning'
+    WHEN EXTRACT(HOUR FROM calories.ActivityHour) BETWEEN 12 AND 18 THEN 'Afternoon'
+    WHEN EXTRACT(HOUR FROM calories.ActivityHour) BETWEEN 19 AND 22 THEN 'Evening'
+    ELSE 'Night'
+  END AS Period,
+  calories.Calories,
+  intensities.TotalIntensity,
+  intensities.AverageIntensity,
+  steps.StepTotal
+FROM `omega-terrain-424207-q5.bellabeat.hourly_calories` AS calories
+FULL OUTER JOIN `omega-terrain-424207-q5.bellabeat.hourly_intensities` AS intensities
+ON calories.Id = intensities.Id AND calories.ActivityHour = intensities.ActivityHour
+FULL OUTER JOIN `omega-terrain-424207-q5.bellabeat.hourly_steps` AS steps
+ON calories.Id = steps.Id AND calories.ActivityHour = steps.ActivityHour
+````
