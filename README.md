@@ -187,21 +187,25 @@ For full results: [click here](https://drive.google.com/file/d/1d5Qj3ak-UpVUk0M0
 ### How much physical activity is recommended?
 
 CHILDREN & ADOLESCENTS (5-17 years old)
+
 It is recommended that:
 - Children and adolescents should do at least an average of 60 minutes per day of moderateto vigorous-intensity, mostly aerobic, physical
 activity, across the week. 
 - Vigorous-intensity aerobic activities, as well as those that strengthen muscle and bone,should be incorporated at least 3 days a week.
 - Children and adolescents should limit the amount of time spent being sedentary, particularly the amount of recreational screen time. 
 
-In children and adolescents, higher amounts of sedentary behaviour are associated with the following poor health outcomes: increased adiposity; poorer cardiometabolic health, fitness, behavioural conduct/pro-social behaviour; and reduced sleep duration.
-
 ADULTS (18-64 years old)
+
 It is recommended that:
-- All adults should undertake regular physical activity.
 - Adults should do at least 150 – 300 minutes of moderate-intensity aerobic physical activity; or at least 75–150 minutes of vigorousintensity aerobic physical activity; or an equivalent combination of moderate- and vigorous-intensity activity throughout the week,
 for substantial health benefits.
 
-Source: World Health Organization
+OLDER ADULTS (65 years old & older)
+
+It is recommended that:
+- Older adults should do at least 150–300 minutes of moderate-intensity aerobic physical activity; or at least 75–150 minutes of vigorousintensity aerobic physical activity; or an equivalent combination of moderate- and vigorous-intensity activity throughout the week, for substantial health benefits.
+
+Source: [World Health Organization](https://www.who.int/publications/i/item/97892400151280)
 ![images](https://cdn.who.int/media/images/default-source/health-topics/physical-activity/summary-infographic-guideline-on-physical-activity.jpg?sfvrsn=246f54b7_9)
 
 ````sql
@@ -209,11 +213,27 @@ SELECT
   Id,
   ROUND(AVG(FairlyActiveMinutes) + AVG(VeryActiveMinutes)) AS AVG_TotalActiveMinutes,
   CASE
-    WHEN (AVG(FairlyActiveMinutes) + AVG(VeryActiveMinutes)) >= 20 THEN 'APPROVED'
-    ELSE 'NOT APPROVED'
-  END AS WHO_Recommendation
-FROM `steadfast-slate-398812.Bellabeat.dailyActivity`
+    WHEN (AVG(FairlyActiveMinutes) + AVG(VeryActiveMinutes)) >= 20 THEN 'ACHIEVED'
+    ELSE 'NOT ACHIEVED'
+  END AS weekly_active_goals
+FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
+AVG_TotalActiveMinutes
 GROUP BY Id
+ORDER BY AVG_TotalActiveMinutes DESC
 ````
-For full results: [click here](https://drive.google.com/file/d/12P6oqob49XPinwhGZ_Il9rAUV-rFhsdy/view)
+For full results: [click here](https://drive.google.com/file/d/1bxA95a0UVpziBAaxMIM3i_fdeI5ab8pm/view)
 
+````sql
+SELECT 
+  Id,
+  ROUND(AVG(TotalSteps)) AS AVG_TotalSteps,
+  ROUND(AVG(Calories)) AS AVG_Calories,
+  ROUND(AVG(TotalDistance)) AS AVG_TotalDistance,
+  ROUND((AVG(VeryActiveDistance) / AVG(TotalDistance)) * 100) AS PercentageActiveDistance,
+  ROUND(AVG(TotalMinutesAsleep)) AS AVG_TotalMinutesAsleep
+FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
+GROUP BY Id
+ORDER BY PercentageActiveDistance DESC
+````
+
+For full results: [click here](https://drive.google.com/file/d/1u-1dE0dAg1qgp80qJ4yhwcLt-Wx0IQ-i/view)
