@@ -44,6 +44,23 @@ FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
 
 - The dataset shows that all tables have a common 'Id' column and a similar date column. These columns will be used to join the tables, reducing the total number from five to two: one for daily data (dailyActivity) and another for hourly data (hourlyActivity). Additionally, columns for days of the week (e.g., Monday, Tuesday) and time periods (e.g., Morning, Afternoon) will be created.
 
+#### Data cleaning steps: 
+- Deleted duplicate rows in the sleepDay table.
+- Created new tables: ActivityDay, ActivityDate, ActivityHour and Period
+- New daily_activity table with sleepDay data columns added 
+- Created hourly_activity table with data from hourlyCalories, hourlyIntensities and hourlySteps
+  
+| Column Name | Action Taken |
+| ------- | ----------- |
+| ActivityDay | Calculated by extracting the weekday from columns 'ActivityDate' or 'ActivityHour' (e.g., “Monday”) |
+| ActivityDate | Calculated by extracting the date from 'ActivityHour' datetime column |
+| ActivityHour | Calculated by extracting the time from 'ActivityHour' datetime column |
+| Period | This column is determined based on the time of day in the 'ActivityHour' column |
+| Morning | 5AM to 11AM |
+| Afternoon | 12PM to 6PM |
+| Evening | 7PM to 10PM |
+| Night | 11PM to 4AM |
+
 
 ````sql
 CREATE OR REPLACE TABLE `omega-terrain-424207-q5.bellabeat.daily_activity` AS 
@@ -72,7 +89,7 @@ LEFT JOIN `omega-terrain-424207-q5.bellabeat.sleep_day` AS sleep
 ON day.Id = sleep.Id AND day.ActivityDate = sleep.SleepDay
 ````
 
-- Create new hourlyActivity table from the other 3 tables and split ActivityHour column into Date and Time columns.
+- Create new hourly_activity table from the other 3 tables and split ActivityHour column into Date and Time columns.
 - Create a period columns with day periods, i.e., Morning, Afternoon, etc.
 
 
