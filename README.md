@@ -237,3 +237,37 @@ ORDER BY PercentageActiveDistance DESC
 ````
 
 For full results: [click here](https://drive.google.com/file/d/1u-1dE0dAg1qgp80qJ4yhwcLt-Wx0IQ-i/view)
+
+````sql
+SELECT 
+  ActivityDay,
+  ROUND(AVG(Calories)) AS AVG_Calories,
+  ROUND(AVG(TotalIntensity)) AS AVG_TotalIntensity,
+  ROUND(AVG(StepTotal)) AS AVG_StepTotal
+FROM (
+  SELECT 
+    Id,
+    ActivityDay,
+    ActivityDate,
+    SUM(Calories) AS Calories,
+    SUM(TotalIntensity) AS TotalIntensity,
+    SUM(StepTotal) AS StepTotal
+  FROM `omega-terrain-424207-q5.bellabeat.hourly_activity` 
+  GROUP BY Id, ActivityDay, ActivityDate
+) 
+GROUP BY ActivityDay
+ORDER BY
+  CASE
+    WHEN ActivityDay = 'Monday' THEN 1
+    WHEN ActivityDay = 'Tuesday' THEN 2
+    WHEN ActivityDay = 'Wednesday' THEN 3
+    WHEN ActivityDay = 'Thursday' THEN 4
+    WHEN ActivityDay = 'Friday' THEN 5
+    WHEN ActivityDay = 'Saturday' THEN 6
+    WHEN ActivityDay = 'Sunday' THEN 7
+  END
+````
+
+<img width="635" alt="Screenshot 2024-07-22 at 6 33 46 AM" src="https://github.com/user-attachments/assets/54ae29cc-e181-4c4b-9263-c69d11feea84">
+
+
