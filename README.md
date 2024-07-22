@@ -46,7 +46,7 @@ FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
 
 #### Data cleaning steps: 
 - Deleted duplicate rows in the sleepDay table.
-- Created new tables: ActivityDay, ActivityDate, ActivityHour and Period 
+- Created new columns: ActivityDay, ActivityDate, ActivityHour and Period 
 - New daily_activity table with sleepDay data columns added 
 - Created hourly_activity table with data from hourlyCalories, hourlyIntensities and hourlySteps
   
@@ -118,8 +118,31 @@ FULL OUTER JOIN `omega-terrain-424207-q5.bellabeat.hourly_steps` AS steps
 ON calories.Id = steps.Id AND calories.ActivityHour = steps.ActivityHour
 ````
 
-## Data Analysis
-I collect and analyze the minimum, maximum, and average values of numeric columns to gain insights into the data and identify any potential outliers that could influence the analysis.
+## Analyzing Trends and Insights
+
+#### To effectively analyze the data for the Bellabeat case study, the following steps will be taken:
+
+- Aggregate the data: Collect and compile the data to ensure it is useful and easily accessible for analysis.
+- Organize and format the data: Systematically organize and properly format the data to facilitate smooth and efficient analysis.
+- Perform calculations: Conduct necessary calculations to derive meaningful metrics and insights from the data.
+- Identify trends and relationships: Analyze the data to uncover significant trends and relationships that can inform our conclusions and recommendations.
+
+#### The analysis will be guided by the following principles:
+
+Source: [World Health Organization](https://www.who.int/publications/i/item/97892400151280)
+![images](https://cdn.who.int/media/images/default-source/health-topics/physical-activity/summary-infographic-guideline-on-physical-activity.jpg?sfvrsn=246f54b7_9)
+
+ADULTS (18 years and older)
+
+It is recommended that:
+
+- Adults should do at least 150 – 300 minutes of moderate-intensity aerobic physical activity; or at least 75–150 minutes of vigorous intensity aerobic physical activity; or an equivalent combination of moderate- and vigorous-intensity activity throughout the week, for substantial health benefits.
+  
+- Adults who took 8,000 or more steps a day had a reduced risk of death over the following decade than those who only walked 4,000 steps a day. Source: [NIH Research Matters](https://www.nih.gov/news-events/nih-research-matters/number-steps-day-more-important-step-intensity)
+  
+- Step intensity (number of steps per minute) didn’t influence the risk of death, suggesting that the total number of steps per day is more important than intensity. Source: [NIH Research Matters](https://www.nih.gov/news-events/nih-research-matters/number-steps-day-more-important-step-intensity)
+
+
 
 ````sql
 SELECT 
@@ -184,29 +207,7 @@ FROM `omega-terrain-424207-q5.bellabeat.daily_activity
 
 For full results: [click here](https://drive.google.com/file/d/1d5Qj3ak-UpVUk0M0oPHUJTjPOBmlTFJb/view)
 
-### How much physical activity is recommended?
 
-CHILDREN & ADOLESCENTS (5-17 years old)
-
-It is recommended that:
-- Children and adolescents should do at least an average of 60 minutes per day of moderateto vigorous-intensity, mostly aerobic, physical
-activity, across the week. 
-- Vigorous-intensity aerobic activities, as well as those that strengthen muscle and bone,should be incorporated at least 3 days a week.
-- Children and adolescents should limit the amount of time spent being sedentary, particularly the amount of recreational screen time. 
-
-ADULTS (18-64 years old)
-
-It is recommended that:
-- Adults should do at least 150 – 300 minutes of moderate-intensity aerobic physical activity; or at least 75–150 minutes of vigorousintensity aerobic physical activity; or an equivalent combination of moderate- and vigorous-intensity activity throughout the week,
-for substantial health benefits.
-
-OLDER ADULTS (65 years old & older)
-
-It is recommended that:
-- Older adults should do at least 150–300 minutes of moderate-intensity aerobic physical activity; or at least 75–150 minutes of vigorousintensity aerobic physical activity; or an equivalent combination of moderate- and vigorous-intensity activity throughout the week, for substantial health benefits.
-
-Source: [World Health Organization](https://www.who.int/publications/i/item/97892400151280)
-![images](https://cdn.who.int/media/images/default-source/health-topics/physical-activity/summary-infographic-guideline-on-physical-activity.jpg?sfvrsn=246f54b7_9)
 
 ````sql
 SELECT
@@ -270,4 +271,68 @@ ORDER BY
 
 <img width="635" alt="Screenshot 2024-07-22 at 6 33 46 AM" src="https://github.com/user-attachments/assets/54ae29cc-e181-4c4b-9263-c69d11feea84">
 
+````sql
+SELECT 
+  Period,
+  ROUND(AVG(Calories)) AS AVG_Calories,
+  ROUND(AVG(TotalIntensity)) AS AVG_TotalIntensity,
+  ROUND(AVG(StepTotal)) AS AVG_StepTotal
+FROM (
+  SELECT 
+    Id,
+    Period,
+    ActivityDate,
+    SUM(Calories) AS Calories,
+    SUM(TotalIntensity) AS TotalIntensity,
+    SUM(StepTotal) AS StepTotal
+  FROM `omega-terrain-424207-q5.bellabeat.hourly_activity` 
+  GROUP BY Id, Period, ActivityDate
+) 
+GROUP BY Period
+ORDER BY
+  CASE
+    WHEN Period = 'Morning' THEN 1
+    WHEN Period = 'Afternoon' THEN 2
+    WHEN Period = 'Evening' THEN 3
+    When Period = 'Night' THEN 4
+  END
+````
+<img width="640" alt="Screenshot 2024-07-22 at 7 12 17 PM" src="https://github.com/user-attachments/assets/1919b618-f180-4903-9770-f99229b4195e">
 
+
+````sql
+SELECT 
+  ActivityHour,
+  ROUND(AVG(Calories)) AS AVG_Calories,
+  ROUND(AVG(TotalIntensity)) AS AVG_TotalIntensity,
+  ROUND(AVG(StepTotal)) AS AVG_StepTotal
+FROM `omega-terrain-424207-q5.bellabeat.hourly_activity`
+GROUP BY ActivityHour
+ORDER BY
+  CASE
+    WHEN ActivityHour = '00:00:00' THEN 1
+    WHEN ActivityHour = '01:00:00' THEN 2
+    WHEN ActivityHour = '02:00:00' THEN 3
+    WHEN ActivityHour = '03:00:00' THEN 4
+    WHEN ActivityHour = '04:00:00' THEN 5
+    WHEN ActivityHour = '05:00:00' THEN 6
+    WHEN ActivityHour = '06:00:00' THEN 7
+    WHEN ActivityHour = '07:00:00' THEN 8
+    WHEN ActivityHour = '08:00:00' THEN 9
+    WHEN ActivityHour = '09:00:00' THEN 10
+    WHEN ActivityHour = '10:00:00' THEN 11
+    WHEN ActivityHour = '11:00:00' THEN 12
+    WHEN ActivityHour = '12:00:00' THEN 13
+    WHEN ActivityHour = '13:00:00' THEN 14
+    WHEN ActivityHour = '14:00:00' THEN 15
+    WHEN ActivityHour = '15:00:00' THEN 16
+    WHEN ActivityHour = '16:00:00' THEN 17
+    WHEN ActivityHour = '17:00:00' THEN 18
+    WHEN ActivityHour = '18:00:00' THEN 19
+    WHEN ActivityHour = '19:00:00' THEN 20
+    WHEN ActivityHour = '20:00:00' THEN 21
+    WHEN ActivityHour = '21:00:00' THEN 22
+    WHEN ActivityHour = '22:00:00' THEN 23
+    WHEN ActivityHour = '23:00:00' THEN 24
+  END
+````
