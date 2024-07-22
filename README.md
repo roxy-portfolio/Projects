@@ -184,6 +184,26 @@ FROM `omega-terrain-424207-q5.bellabeat.daily_activity
 
 For full results: [click here](https://drive.google.com/file/d/1d5Qj3ak-UpVUk0M0oPHUJTjPOBmlTFJb/view)
 
+### How much physical activity is recommended?
+
+CHILDREN & ADOLESCENTS (5-17 years old)
+It is recommended that:
+- Children and adolescents should do at least an average of 60 minutes per day of moderateto vigorous-intensity, mostly aerobic, physical
+activity, across the week. 
+- Vigorous-intensity aerobic activities, as well as those that strengthen muscle and bone,should be incorporated at least 3 days a week.
+- Children and adolescents should limit the amount of time spent being sedentary, particularly the amount of recreational screen time. 
+
+In children and adolescents, higher amounts of sedentary behaviour are associated with the following poor health outcomes: increased adiposity; poorer cardiometabolic health, fitness, behavioural conduct/pro-social behaviour; and reduced sleep duration.
+
+ADULTS (18-64 years old)
+It is recommended that:
+- All adults should undertake regular physical activity.
+- Adults should do at least 150 – 300 minutes of moderate-intensity aerobic physical activity; or at least 75–150 minutes of vigorousintensity aerobic physical activity; or an equivalent combination of moderate- and vigorous-intensity activity throughout the week,
+for substantial health benefits.
+
+Source: World Health Organization
+![images](https://cdn.who.int/media/images/default-source/health-topics/physical-activity/summary-infographic-guideline-on-physical-activity.jpg?sfvrsn=246f54b7_9)
+
 ````sql
 SELECT
   Id,
@@ -196,3 +216,4 @@ FROM `steadfast-slate-398812.Bellabeat.dailyActivity`
 GROUP BY Id
 ````
 For full results: [click here](https://drive.google.com/file/d/12P6oqob49XPinwhGZ_Il9rAUV-rFhsdy/view)
+
