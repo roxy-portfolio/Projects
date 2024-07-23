@@ -353,3 +353,21 @@ ORDER BY
   END
 ````
 <img width="408" alt="Screenshot 2024-07-22 at 8 01 39 PM" src="https://github.com/user-attachments/assets/5b8d9644-1ffb-411b-a729-ad55a5d11002">
+
+## Findings from Data Trends and Patterns
+
+- Average Daily Physical exercise: The majority of users fulfill WHO requirements by engaging in more than 20 minutes of physical exercise each day on average; 60% of users do not achieve this minimal need.
+
+- Step Count of Active Users: Of the users, 57% are categorized as active, with an average of more than 8,000 steps per day. Notably, one person logs more than 16,000 steps a day on average.
+
+- Less Active Subgroup: On the other hand, 5 users have a daily average of less than 3,000 steps, which suggests a more sedentary way of living.
+
+- Step Count and Calorie Expenditure: There is a definite relationship between the two. With an average of approximately 7,500 steps and 2,300 calories expended per day, users who walk more than 8,000 steps per day are the only ones who burn more than 3,000 calories.
+  
+- Activity Intensity: Individuals who walk more often tend to be more active, with at least 20% of their distance classified as "very active."
+
+- The average amount of time users spend sitting is 990 minutes, or 16.5 hours, while they sleep for an average of 420 minutes, or 7 hours. This suggests that 9.5 hours is a significant amount of time that could be spent less sitting down.
+
+- Activity on Particular Days: Tuesdays and Saturdays are the days with the highest levels of physical activity, while Sundays often have the lowest levels.
+
+- Peak Activity Hours: Before intensity drops, there is one more hour of high activity in the evening following activity peaks in the morning and afternoon. Notably, the hours of greatest activity are recorded between 12–14 and 17–19.
