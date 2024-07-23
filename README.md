@@ -210,6 +210,7 @@ For full results: [click here](https://drive.google.com/file/d/1d5Qj3ak-UpVUk0M0
 - Based on our findings, the average user takes approximately 7,652 total steps per day, sleeps for about 420 minutes or 7 hours, burns around 2,307 calories, and has between 14 to 21 minutes of fairly to very active minutes each day.
 - These metrics provide a comprehensive view of user activity and lifestyle, highlighting the balance between physical activity, sleep, and calorie expenditure.
 
+
 ````sql
 SELECT
   Id,
@@ -227,8 +228,10 @@ For full results: [click here](https://drive.google.com/file/d/1bxA95a0UVpziBAax
 
 <img width="390" alt="Screenshot 2024-07-22 at 7 53 50 PM" src="https://github.com/user-attachments/assets/e15524d0-e2ba-4e23-9350-71884d744b4d">
 
+
 - Adults should aim for 150–300 minutes of moderate-intensity physical activity each week, which translates to about 20-43 minutes daily.
 - According to our findings, out of 33 users, 20 were able to achieved an average of 20-117 minutes of fairly to very active minutes each day. This indicates that a significant portion of users are meeting or exceeding the recommended daily physical activity levels.
+
   
 ````sql
 SELECT 
@@ -244,6 +247,12 @@ ORDER BY PercentageActiveDistance DESC
 ````
 
 For full results: [click here](https://drive.google.com/file/d/1u-1dE0dAg1qgp80qJ4yhwcLt-Wx0IQ-i/view)
+
+- The Centers for Disease Control and Prevention (CDC) recommends walking at least 10,000 steps per day.
+- Based on our findings, out of 33 users, only 7 meet or exceed this daily recommendation, while 6 users record fewer than 4,000 steps per day.
+- Notably, these 6 users also have the highest total sleep duration, ranging from 417 to 652 minutes, or approximately 7 to 11 hours per day. Additionally, I noticed a correlation between the number of steps taken and calories burned: users who took around 8,000 steps per day were able to burn at least 2,000 calories or more.
+- While the optimal amount of sleep can vary among individuals, the Centers for Disease Control and Prevention (CDC) recommends that adults get at least 7 hours of sleep each night.
+- Among the 24 users with sleep records, only half achieved this recommended amount. Additionally, some users recorded significantly lower sleep durations, ranging from just 60 to 70 minutes per day.
 
 ````sql
 SELECT 
@@ -276,6 +285,7 @@ ORDER BY
 ````
 
 <img width="635" alt="Screenshot 2024-07-22 at 6 33 46 AM" src="https://github.com/user-attachments/assets/54ae29cc-e181-4c4b-9263-c69d11feea84">
+
 
 ````sql
 SELECT 
