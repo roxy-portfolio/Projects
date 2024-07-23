@@ -207,7 +207,8 @@ FROM `omega-terrain-424207-q5.bellabeat.daily_activity
 
 For full results: [click here](https://drive.google.com/file/d/1d5Qj3ak-UpVUk0M0oPHUJTjPOBmlTFJb/view)
 
-
+- Based on our findings, the average user takes approximately 7,652 total steps per day, sleeps for about 420 minutes or 7 hours, burns around 2,307 calories, and has between 14 to 21 minutes of fairly to very active minutes each day.
+- These metrics provide a comprehensive view of user activity and lifestyle, highlighting the balance between physical activity, sleep, and calorie expenditure.
 
 ````sql
 SELECT
@@ -224,6 +225,11 @@ ORDER BY AVG_TotalActiveMinutes DESC
 ````
 For full results: [click here](https://drive.google.com/file/d/1bxA95a0UVpziBAaxMIM3i_fdeI5ab8pm/view)
 
+<img width="390" alt="Screenshot 2024-07-22 at 7 53 50 PM" src="https://github.com/user-attachments/assets/e15524d0-e2ba-4e23-9350-71884d744b4d">
+
+- Adults should aim for 150–300 minutes of moderate-intensity physical activity each week, which translates to about 20-43 minutes daily.
+- According to our findings, out of 33 users, 20 were able to achieved an average of 20-117 minutes of fairly to very active minutes each day. This indicates that a significant portion of users are meeting or exceeding the recommended daily physical activity levels.
+  
 ````sql
 SELECT 
   Id,
@@ -336,3 +342,4 @@ ORDER BY
     WHEN ActivityHour = '23:00:00' THEN 24
   END
 ````
+<img width="408" alt="Screenshot 2024-07-22 at 8 01 39 PM" src="https://github.com/user-attachments/assets/5b8d9644-1ffb-411b-a729-ad55a5d11002">
