@@ -22,7 +22,11 @@ insights you discover will then help guide marketing strategy for the company.
 ## Data Exploration
 BigQuery and Google Sheets will be utilized for data processing and analysis, while Tableau will be used for data visualization.
 
-The file caused an import error when using the "Auto detect" schema due to data type discrepancies, particularly with the timestamp format, which included AM/PM designations—formats not accepted by BigQuery. To resolve these issues and ensure a successful import, a custom schema was required. The CSV file was initially opened as a text document to inspect column names. Columns were then added individually using the "Add field" function (indicated by a plus sign in the schema section), with special attention given to specifying the timestamp column as a string field. For the other files, data types were changed to Datetime or Date using Google Sheets.
+- The file caused an import error when using the "Auto detect" schema due to data type discrepancies, particularly with the timestamp format, which included AM/PM designations—formats not accepted by BigQuery.
+- To resolve these issues and ensure a successful import, a custom schema was required.
+- The CSV file was initially opened as a text document to inspect column names.
+- Columns were then added individually using the "Add field" function (indicated by a plus sign in the schema section), with special attention given to specifying the timestamp column as a string field.
+- For the other files, data types were changed to Datetime or Date using Google Sheets.
 
 #### Checking unique user IDs for each tables 
 ````sql
