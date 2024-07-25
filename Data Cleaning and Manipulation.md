@@ -29,11 +29,49 @@ BigQuery and Google Sheets will be utilized for data processing and analysis, wh
 - For the other files, data types were changed to Datetime or Date using Google Sheets.
 
 #### Checking unique user IDs for each tables 
+
 ````sql
 SELECT
  DISTINCT Id
 FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
 ````
+
+
+````sql
+SELECT
+ DISTINCT Id
+FROM `omega-terrain-424207-q5.bellabeat.heartrate`
+````
+
+
+````sql
+SELECT
+ DISTINCT Id
+FROM `omega-terrain-424207-q5.bellabeat.hourly_calories`
+````
+
+
+````sql
+SELECT
+ DISTINCT Id
+FROM `omega-terrain-424207-q5.bellabeat.hourly_intensities`
+````
+
+
+````sql
+SELECT
+ DISTINCT Id
+FROM `omega-terrain-424207-q5.bellabeat.hourly_steps`
+````
+
+
+````sql
+SELECT
+ DISTINCT Id
+FROM `omega-terrain-424207-q5.bellabeat.sleep_day`
+````
+
+
 | Table Name | Unique IDs | 
 | ------- | ----------- |
 | dailyActivity | 33 |
@@ -42,7 +80,7 @@ FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
 | hourlyIntensities | 33 |
 | hourlySteps | 33 |
 | sleepDay | 24 |
-| weightLoginfo | 8 |
+
 
 ## Data Cleaning & Manipulation
 
@@ -122,6 +160,8 @@ FULL OUTER JOIN `omega-terrain-424207-q5.bellabeat.hourly_steps` AS steps
 ON calories.Id = steps.Id AND calories.ActivityHour = steps.ActivityHour
 ````
 
+Now that we have a good understanding about the data, table names, column names, column datatypes, table relations, tables with date and time information. We can use this information to create additional tables, columns, calculated columns, join tables in future if necessary.
+
 ## Analyzing Trends and Insights
 
 #### To effectively analyze the data for the Bellabeat case study, the following steps will be taken:
@@ -146,6 +186,9 @@ It is recommended that:
   
 - Step intensity (number of steps per minute) didn’t influence the risk of death, suggesting that the total number of steps per day is more important than intensity. Source: [NIH Research Matters](https://www.nih.gov/news-events/nih-research-matters/number-steps-day-more-important-step-intensity)
 
+
+#### Summary Statistics 
+Here are some quick summary statistics about each table: 
 
 
 ````sql
@@ -216,6 +259,24 @@ For full results: [click here](https://drive.google.com/file/d/1d5Qj3ak-UpVUk0M0
 
 
 ````sql
+Select 
+Distinct Id, 
+ SUM(SedentaryMinutes) as SUM_Sedentary,
+ SUM(LightlyActiveMinutes) as SUM_Active,
+ SUM(FairlyActiveMinutes) as SUM_FairlyActive, 
+ SUM(VeryActiveMinutes) as SUM_VeryActive,
+ SUM(TotalMinutesAsleep) as SUM_MinutesAsleep
+FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
+Group by Id
+ORDER BY SUM_MinutesAsleep DESC
+````
+<img width="808" alt="Screenshot 2024-07-24 at 10 20 42 PM" src="https://github.com/user-attachments/assets/ae040a80-e8e2-4010-8a61-8c7e5a74432b">
+
+- It is evident that most of the time is spent in sedentary (sedentary and sleep mins) and only a fraction of the day is spent in active states (very active, fairly active and light active mins).
+
+For full results: [click here](https://drive.google.com/file/d/1Psz7qpK7xMjZxXJhC6J2lRZ1bEsd2qkn/view)
+
+````sql
 SELECT
   Id,
   ROUND(AVG(FairlyActiveMinutes) + AVG(VeryActiveMinutes)) AS AVG_TotalActiveMinutes,
@@ -250,13 +311,16 @@ GROUP BY Id
 ORDER BY PercentageActiveDistance DESC
 ````
 
-For full results: [click here](https://drive.google.com/file/d/1u-1dE0dAg1qgp80qJ4yhwcLt-Wx0IQ-i/view)
+<img width="404" alt="Screenshot 2024-07-24 at 10 25 48 PM" src="https://github.com/user-attachments/assets/585fe42d-f72f-40da-ab6e-31055566fbd1">
+<img width="391" alt="Screenshot 2024-07-24 at 10 26 21 PM" src="https://github.com/user-attachments/assets/594e95d8-73aa-4244-8f22-62a69d92c263">
+
 
 - The Centers for Disease Control and Prevention (CDC) recommends walking at least 10,000 steps per day.
 - Based on our findings, out of 33 users, only 7 meet or exceed this daily recommendation, while 6 users record fewer than 4,000 steps per day.
 - Notably, these 6 users also have the highest total sleep duration, ranging from 417 to 652 minutes, or approximately 7 to 11 hours per day. Additionally, I noticed a correlation between the number of steps taken and calories burned: users who took around 8,000 steps per day were able to burn at least 2,000 calories or more.
 - While the optimal amount of sleep can vary among individuals, the Centers for Disease Control and Prevention (CDC) recommends that adults get at least 7 hours of sleep each night.
 - Among the 24 users with sleep records, only half achieved this recommended amount. Additionally, some users recorded significantly lower sleep durations, ranging from just 60 to 70 minutes per day.
+
 
 ````sql
 SELECT 
