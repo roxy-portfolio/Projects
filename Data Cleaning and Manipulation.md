@@ -11,7 +11,7 @@ device fitness data could help unlock new growth opportunities for the company. 
 Bellabeat’s products and analyze smart device data to gain insight into how consumers are using their smart devices. The
 insights you discover will then help guide marketing strategy for the company. 
 
-## Guided questions for the analysis: 
+## 📌 Guided questions for the analysis: 
 1. What are some trends in smart device usage?
 2. How could these trends apply to Bellabeat customers?
 3. How could these trends help influence Bellabeat marketing strategy?
@@ -162,7 +162,7 @@ ON calories.Id = steps.Id AND calories.ActivityHour = steps.ActivityHour
 
 Now that we have a good understanding about the data, table names, column names, column datatypes, table relations, tables with date and time information. We can use this information to create additional tables, columns, calculated columns, join tables in future if necessary.
 
-## Analyzing Trends and Insights
+## 📊 Analyzing Trends and Insights
 
 #### To effectively analyze the data for the Bellabeat case study, the following steps will be taken:
 
@@ -187,7 +187,7 @@ It is recommended that:
 - Step intensity (number of steps per minute) didn’t influence the risk of death, suggesting that the total number of steps per day is more important than intensity. Source: [NIH Research Matters](https://www.nih.gov/news-events/nih-research-matters/number-steps-day-more-important-step-intensity)
 
 
-#### Summary Statistics 
+## Summary Statistics 
 Here are some quick summary statistics about each table: 
 
 
@@ -257,6 +257,7 @@ For full results: [click here](https://drive.google.com/file/d/1d5Qj3ak-UpVUk0M0
 - Based on our findings, the average user takes approximately 7,652 total steps per day, sleeps for about 420 minutes or 7 hours, burns around 2,307 calories, and has between 14 to 21 minutes of fairly to very active minutes each day.
 - These metrics provide a comprehensive view of user activity and lifestyle, highlighting the balance between physical activity, sleep, and calorie expenditure.
 
+#### 🕥 Total time spent on activity every day:
 
 ````sql
 Select 
@@ -297,7 +298,8 @@ For full results: [click here](https://drive.google.com/file/d/1bxA95a0UVpziBAax
 - Adults should aim for 150–300 minutes of moderate-intensity physical activity each week, which translates to about 20-43 minutes daily.
 - According to our findings, out of 33 users, 20 were able to achieved an average of 20-117 minutes of fairly to very active minutes each day. This indicates that a significant portion of users are meeting or exceeding the recommended daily physical activity levels.
 
-  
+#### Daily Average Analysis (Steps, Calories, Distance)
+
 ````sql
 SELECT 
   Id,
@@ -320,6 +322,24 @@ ORDER BY PercentageActiveDistance DESC
 - Notably, these 6 users also have the highest total sleep duration, ranging from 417 to 652 minutes, or approximately 7 to 11 hours per day. Additionally, I noticed a correlation between the number of steps taken and calories burned: users who took around 8,000 steps per day were able to burn at least 2,000 calories or more.
 - While the optimal amount of sleep can vary among individuals, the Centers for Disease Control and Prevention (CDC) recommends that adults get at least 7 hours of sleep each night.
 - Among the 24 users with sleep records, only half achieved this recommended amount. Additionally, some users recorded significantly lower sleep durations, ranging from just 60 to 70 minutes per day.
+
+#### Active Duration and calories burned relation
+
+````sql
+SELECT 
+ Id,
+ SUM(TotalSteps) AS total_steps,
+ SUM(VeryActiveMinutes) as total_very_active_mins,
+ Sum(FairlyActiveMinutes) as total_fairly_active_mins,
+ SUM(LightlyActiveMinutes) as total_lightly_active_mins,
+ SUM(Calories) as total_calories
+FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
+GROUP BY 1
+ORDER BY 1
+````
+<img width="796" alt="Screenshot 2024-07-24 at 11 28 53 PM" src="https://github.com/user-attachments/assets/113f77b3-f8cf-4ddb-9652-2071945cf3e9">
+
+For full results: [click here](https://drive.google.com/file/d/1gRxM_URGc_LvZRqCWmTtx19tK1VlPGPn/view)
 
 
 ````sql
@@ -422,7 +442,7 @@ ORDER BY
 ````
 <img width="408" alt="Screenshot 2024-07-22 at 8 01 39 PM" src="https://github.com/user-attachments/assets/5b8d9644-1ffb-411b-a729-ad55a5d11002">
 
-## Findings from Data Trends and Patterns
+## 📉 Findings from Data Trends and Patterns
 
 - Average Daily Physical exercise: The majority of users fulfill WHO requirements by engaging in more than 20 minutes of physical exercise each day on average; 60% of users do not achieve this minimal need.
 
