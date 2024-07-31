@@ -16,7 +16,7 @@ insights you discover will then help guide marketing strategy for the company.
 2. How could these trends apply to Bellabeat customers?
 3. How could these trends help influence Bellabeat marketing strategy?
 
-## Dataset used
+## Dataset Used
 [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit) (CC0: Public Domain, dataset made available through Mobius)
 
 ## Data Exploration
@@ -277,6 +277,9 @@ ORDER BY SUM_MinutesAsleep DESC
 
 For full results: [click here](https://drive.google.com/file/d/1Psz7qpK7xMjZxXJhC6J2lRZ1bEsd2qkn/view)
 
+#### 🕥 Weekly Activity Goal:
+🏃🏻‍♀️ Adults should aim for 150–300 minutes of moderate-intensity physical activity each week, which translates to about 20-43 minutes daily.
+
 ````sql
 SELECT
   Id,
@@ -292,13 +295,15 @@ ORDER BY AVG_TotalActiveMinutes DESC
 ````
 For full results: [click here](https://drive.google.com/file/d/1bxA95a0UVpziBAaxMIM3i_fdeI5ab8pm/view)
 
-<img width="390" alt="Screenshot 2024-07-22 at 7 53 50 PM" src="https://github.com/user-attachments/assets/e15524d0-e2ba-4e23-9350-71884d744b4d">
+<img width="404" alt="Screenshot 2024-07-24 at 10 25 48 PM" src="https://github.com/user-attachments/assets/585fe42d-f72f-40da-ab6e-31055566fbd1">
+<img width="391" alt="Screenshot 2024-07-24 at 10 26 21 PM" src="https://github.com/user-attachments/assets/594e95d8-73aa-4244-8f22-62a69d92c263">
 
 
-- Adults should aim for 150–300 minutes of moderate-intensity physical activity each week, which translates to about 20-43 minutes daily.
 - According to our findings, out of 33 users, 20 were able to achieved an average of 20-117 minutes of fairly to very active minutes each day. This indicates that a significant portion of users are meeting or exceeding the recommended daily physical activity levels.
 
 #### Daily Average Analysis (Steps, Calories, Distance)
+🏃🏻‍♀️ The Centers for Disease Control and Prevention (CDC) recommends walking at least 10,000 steps per day.
+
 
 ````sql
 SELECT 
@@ -310,20 +315,18 @@ SELECT
   ROUND(AVG(TotalMinutesAsleep)) AS AVG_TotalMinutesAsleep
 FROM `omega-terrain-424207-q5.bellabeat.daily_activity`
 GROUP BY Id
-ORDER BY PercentageActiveDistance DESC
+ORDER BY AVG_TotalMinutesAsleep DESC
 ````
+<img width="808" alt="Screenshot 2024-07-30 at 8 49 39 PM" src="https://github.com/user-attachments/assets/0c2cfa70-83e5-42d5-b066-3e3c90a80f42">
 
-<img width="404" alt="Screenshot 2024-07-24 at 10 25 48 PM" src="https://github.com/user-attachments/assets/585fe42d-f72f-40da-ab6e-31055566fbd1">
-<img width="391" alt="Screenshot 2024-07-24 at 10 26 21 PM" src="https://github.com/user-attachments/assets/594e95d8-73aa-4244-8f22-62a69d92c263">
+For full results: [click here](https://drive.google.com/file/d/1Ppgaj-dZVxfujW_CIXwIquGB_dRnumDx/view)
 
-
-- The Centers for Disease Control and Prevention (CDC) recommends walking at least 10,000 steps per day.
 - Based on our findings, out of 33 users, only 7 meet or exceed this daily recommendation, while 6 users record fewer than 4,000 steps per day.
 - Notably, these 6 users also have the highest total sleep duration, ranging from 417 to 652 minutes, or approximately 7 to 11 hours per day. Additionally, I noticed a correlation between the number of steps taken and calories burned: users who took around 8,000 steps per day were able to burn at least 2,000 calories or more.
 - While the optimal amount of sleep can vary among individuals, the Centers for Disease Control and Prevention (CDC) recommends that adults get at least 7 hours of sleep each night.
 - Among the 24 users with sleep records, only half achieved this recommended amount. Additionally, some users recorded significantly lower sleep durations, ranging from just 60 to 70 minutes per day.
 
-#### Active Duration and calories burned relation
+#### Active Duration and Calories Burned Relation
 
 ````sql
 SELECT 
@@ -341,6 +344,7 @@ ORDER BY 1
 
 For full results: [click here](https://drive.google.com/file/d/1gRxM_URGc_LvZRqCWmTtx19tK1VlPGPn/view)
 
+#### 🏃🏻‍♀️ Daily Average Analysis Steps, Calories and Intensity
 
 ````sql
 SELECT 
@@ -403,7 +407,7 @@ ORDER BY
 ````
 <img width="640" alt="Screenshot 2024-07-22 at 7 12 17 PM" src="https://github.com/user-attachments/assets/1919b618-f180-4903-9770-f99229b4195e">
 
-
+#### 🏃🏻‍♀️ Hourly Average Steps, Calories and Intensity
 ````sql
 SELECT 
   ActivityHour,
