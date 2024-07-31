@@ -20,7 +20,7 @@ insights you discover will then help guide marketing strategy for the company.
 [FitBit Fitness Tracker Data](https://www.kaggle.com/datasets/arashnic/fitbit) (CC0: Public Domain, dataset made available through Mobius)
 
 ## Data Exploration
-BigQuery and Google Sheets will be utilized for data processing and analysis, while Tableau will be used for data visualization.
+BigQuery and Google Sheets will be utilized for data processing and analysis, while Tableau will be used for [data visualization.](https://github.com/roxy-portfolio/Bellabeat-SQL-Tableau/blob/main/Part%202%3A%20Data%20Visualization)
 
 - The file caused an import error when using the "Auto detect" schema due to data type discrepancies, particularly with the timestamp format, which included AM/PM designations—formats not accepted by BigQuery.
 - To resolve these issues and ensure a successful import, a custom schema was required.
@@ -463,3 +463,6 @@ ORDER BY
 - Activity on Particular Days: Tuesdays and Saturdays are the days with the highest levels of physical activity, while Sundays often have the lowest levels.
 
 - Peak Activity Hours: Before intensity drops, there is one more hour of high activity in the evening following activity peaks in the morning and afternoon. Notably, the hours of greatest activity are recorded between 12–14 and 17–19.
+
+### Dive into the data visualization phase of my Bellabeat case study using Tableau to uncover and present key insights.
+[Part 2: Data Visualization](https://github.com/roxy-portfolio/Bellabeat-SQL-Tableau/blob/main/Part%202%3A%20Data%20Visualization)
