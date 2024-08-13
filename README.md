@@ -8,13 +8,24 @@ Each project highlights my skills in uncovering insights, crafting compelling vi
 
 
 ### 📚 Featured Projects
+For this project, I focused on analyzing smart device data to provide insights for Bellabeat, a high-tech wellness company.
+I utilized SQL to extract and clean data, R for data manipulation and statistical analysis, and Tableau to create interactive dashboards that visualize key trends and patterns.
+This project showcases my ability to handle end-to-end data analysis, from cleaning and preparation to insightful visual storytelling. | SQL, R, Tableau | Data Cleaning, Data Manipulation, Data Visualization 
 
-📌 Bellabeat Case Study
-- For this project, I focused on analyzing smart device data to provide insights for Bellabeat, a high-tech wellness company.
+| Project | Tools used | Key Skills |
+| ------- | ----------- | ----------- |
+| 📌 Bellabeat | SQL, R, Tableau | Data Cleaning, Data Manipulation, Data Visualization |
+
+
+| Project | Tools used | Key Skills |
+| ------- | -------- | -------- |
+| 📌 Bellabeat | - For this project, I focused on analyzing smart device data to provide insights for Bellabeat, a high-tech wellness company.
   
 - I utilized SQL to extract and clean data, R for data manipulation and statistical analysis, and Tableau to create interactive dashboards that visualize key trends and patterns.
   
-- This project showcases my ability to handle end-to-end data analysis, from cleaning and preparation to insightful visual storytelling.
+- This project showcases my ability to handle end-to-end data analysis, from cleaning and preparation to insightful visual storytelling. | SQL, R, Tableau | Data Cleaning, Data Manipulation, Data Visualization |
+
+
 
 Tools Used: SQL, R, Tableau
 
